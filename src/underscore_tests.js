@@ -16,68 +16,165 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
+      var arrToReturn = [];
+      if ((n === undefined) && (array.length !== 0)){
+          return array[0];
+      }
+      for (var i = 0; i<n; i++) {
+          if (array[i] !== undefined){
+              arrToReturn.push(array[i]);
+          }
+      }
+      return arrToReturn;
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
+      var arrToReturn = [];
+      if ((n === undefined) && (array.length !== 0)){
+          return array[array.length-1];
+      }
+      for (var i = array.length-1; i>=array.length-n; i--) {
+          if (array[i] !== undefined){
+              arrToReturn.unshift(array[i]);
+          }
+      }
+      return arrToReturn;
   };
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
+      for (var each in collection) {
+        iterator(collection[each], each, collection);
+      }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
+      var index = -1;
+      for (var i = 0; i < array.length; i++) {
+          if (array[i] === target) {
+              index = i;
+              break;
+          }
+      }
+      return index;
   };
 
   // Return all elements of an array that pass a truth test ('iterator' function argument)
   _.filter = function(collection, iterator) {
+      var arrToReturn = [];
+      for (var i = 0; i < collection.length; i++) {
+          if(iterator(collection[i])){
+              arrToReturn.push(collection[i]);
+          }
+      }
+      return arrToReturn;
   };
 
   // Return all elements of an array that don't pass a truth test (the 'iterator' function argument)
   _.reject = function(collection, iterator) {
+      var arrToReturn = [];
+      for (var i = 0; i < collection.length; i++) {
+          if(!iterator(collection[i])){
+              arrToReturn.push(collection[i]);
+          }
+      }
+      return arrToReturn;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+      if (array.length === 0) {
+          throw "Array does not exist";
+      }
+      var uniqArray = [];
+      for (var i = 0; i < array.length; i++) {
+          var tracker = 0;
+          for (var j = 0; j < uniqArray.length; j++) {
+              if (array[i] === uniqArray[j]) {
+                  tracker = tracker + 1;
+              }
+          }
+          if (tracker === 0) {
+              uniqArray.push(array[i]);
+          }
+      }
+      return uniqArray;
   };
 
 
   // Return the results of applying an iterator to each element.
   _.map = function(array, iterator) {
+      for (var i = 0; i < array.length; i++) {
+          array[i] = iterator(array[i]);
+      }
+      return array;
   };
 
   // Takes an array of objects and returns and array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(array, propertyName) {
+      var pluckArray = [];
+      for (var i = 0; i < array.length; i++) {
+          if (array[i] !== undefined) {
+              pluckArray.push(array[i][propertyName]);
+          }
+      }
+      return pluckArray;
   };
 
   // Calls the method named by methodName on each value in the list.
-  _.invoke = function(list, methodName, args) {
+  _.invoke = function(list, methodName, args) {                                 // INCOMPLETE
+
   };
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
-  _.reduce = function(collection, iterator, initialValue) {
+  _.reduce = function(collection, iterator, initialValue) {                     // INCOMPLETE
+
   };
 
-  // Determine if the array or object contains a given value (using `===`).
+  // Determine if the array or object contains a given value (using `===`).     // INCOMPLETE
   _.contains = function(collection, target) {
+      for (var i = 0; i < collection.length; i++) {
+          if (collection[i] === target) {
+              return true;
+          }
+      }return false;
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
+      if(!iterator){
+          return true;
+      }
+      for (var i = 0; i < collection.length; i++) {
+          if(!iterator(collection[i])){
+              return false;
+          }
+      }
+      return true;
   };
 
-  // Determine whether any of the elements pass a truth test. If no iterator is
+  // Determine whether any of the elements pass a truth test. If no iterator is // INCOMPLETE
   // provided, provide a default one
   _.some = function(collection, iterator) {
+      if(!iterator){
+          return false;
+      }
+      for (var i = 0; i < collection.length; i++) {
+          if(iterator(collection[i])){
+              return true;
+          }
+      }
+      return false;
   };
 
 
